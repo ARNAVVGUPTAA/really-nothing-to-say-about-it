@@ -2,13 +2,46 @@
     <script src="p5.js"></script>
     <script src="p5.dom.min.js"></script>
     <script src="p5.sound.min.js"></script>
-<script src="./p5.play.js"></script>
+    <script src="./p5.play.js"></script>
+    <script src="player.js"></script>
+    <script src="form.js"></script>
+
+<script src="sketch.js"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script><!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+  apiKey: "AIzaSyAKJId4p2mgdlY8CCvRBoBsYGjalQho5og",
+  authDomain: "wannabe-painter.firebaseapp.com",
+  databaseURL: "https://wannabe-painter.firebaseio.com",
+  projectId: "wannabe-painter",
+  storageBucket: "wannabe-painter.appspot.com",
+  messagingSenderId: "199260265824",
+  appId: "1:199260265824:web:f32a0cf918fd2b5128d205"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+</script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+https://firebase.google.com/docs/web/setup#available-libraries -->
+
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8">
 
   </head>
   <body>
-      <script src="sketch.js"></script>
-  
+    <div id="ccd"></div>
+    <hr>
+    <p> 
 
-</body></html>
+    <p> <button id= "clearButton" > clear </button> </p>
+
+</body>
+</html>
