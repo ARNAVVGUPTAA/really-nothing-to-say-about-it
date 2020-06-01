@@ -9,7 +9,7 @@ class Player {
     }
   
     getCount(){
-      var playerCountRef = database.ref('/');
+      var playerCountRef = database.ref('PlayerCount');
       playerCountRef.on("value",function(data){
         playerCount = data.val();
       })
@@ -24,7 +24,7 @@ class Player {
     update(name){
       if(playerCount !== 0){
         //var playerIndex = "USER" + PlayerCount;
-        database.ref("USER" + playerCount).set({
+        database.ref("USERS/USER" + playerCount).set({
           name: this.name,
           BG: this.background,
           STROKE: this.stroke,
@@ -32,4 +32,12 @@ class Player {
         });
       }
     }
+
+  static playerInfo(){
+    var playerInfoRef = database.ref("USERS");
+
+    playerInfoRef.on("value",(data)=>{
+      allPlayers = data.val();
+    });  
+  }
   }

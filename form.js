@@ -9,13 +9,18 @@ class Form {
 
     display(){
     this.button.mousePressed(()=> {
+        //print("DONE");
     
     this.input.hide();
     this.button.hide();
     
-    playerCount++ ;
+    this.newMethod();
 
-    //player.name = this.input.value();    
+    player.name = this.input.value();    
     });
+    }
+
+    newMethod() {
+        playerCount++;
     }
 }

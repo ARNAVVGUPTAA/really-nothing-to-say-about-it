@@ -7,7 +7,8 @@ otherColour,otherbg,
 tester;
 var clearButton, slider1,bgb,clb;
 var slider2, slider3,
-player, form;
+player, form,
+allPlayers, col, va, thi;
 function setup() {
 
   database = firebase.database();
@@ -48,15 +49,23 @@ function draw() {
 
   if(playerCount === 2){
 
-    if(tester === 1){
+    thi = slider3.value();
+    va = slider1.value();
+    col = slider2.value();
+
+    //solved the problem, now each new Path has its own value of stroke and thickness
+    currentPath[0] = col;
+    currentPath[1] = thi;
+
+    if(player.index === 1){
       tester = 2;
-    } else if(tester === 2){
+    } else if(player.index === 2){
       tester = 1;
     }
   
-    frameRate(30);
+    frameRate(60);
 
-    let va = slider1.value();
+    
     background(rgb(va,180,180));
     player.background = va;
  
@@ -68,12 +77,6 @@ function draw() {
       currentPath.push(point);
       drawing.push(currentPath);
     }
-  
-  // attributes but important
-    let thi = slider3.value();
-    strokeWeight(thi);
-    let col = slider2.value();
-    stroke(rgb(180,col,col));
 
     player.stroke = thi;
     player.colour = col;
@@ -84,7 +87,9 @@ function draw() {
       var path = drawing[j];
       beginShape();
 
-      for(var i = 0;  i < path.length; i++){
+      for(var i = 2;  i < path.length; i++){
+        stroke(rgb(path[0],path[0],180));
+        strokeWeight(path[1]);
         vertex(path[i].x, path[i].y);
       }
       endShape();
