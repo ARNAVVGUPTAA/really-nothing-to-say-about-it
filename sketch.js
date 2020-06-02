@@ -7,7 +7,7 @@ otherColour,otherbg,
 tester;
 var clearButton, slider1,bgb,clb;
 var slider2, slider3,
-player, form,
+player, form, indexa,
 allPlayers, col, va, thi;
 function setup() {
 
@@ -40,18 +40,29 @@ function setup() {
 }
 
 function draw() {
+  console.log(playerCount);
+    if(playerCount < 2){
+      player.getCount();
+      player.updateCount();
+      player.update();
+    } 
+    if(playerCount === 2){
+        database.ref('/').update({
+          PlayerCount: 2
+        });
+    }
 
-  player.getCount();
-  player.updateCount(playerCount);
-  player.update();
+  thi = slider3.value();
+  va = slider1.value();
+  col = slider2.value();
+
+  player.stroke = thi;
+  player.colour = col;
+  player.background = va;
 
   form.display();
 
-  if(playerCount === 2){
-
-    thi = slider3.value();
-    va = slider1.value();
-    col = slider2.value();
+ // if(playerCount === 2){
 
     //solved the problem, now each new Path has its own value of stroke and thickness
     currentPath[0] = col;
@@ -67,7 +78,6 @@ function draw() {
 
     
     background(rgb(va,180,180));
-    player.background = va;
  
     if(mouseIsPressed){
       var point = {
@@ -77,9 +87,6 @@ function draw() {
       currentPath.push(point);
       drawing.push(currentPath);
     }
-
-    player.stroke = thi;
-    player.colour = col;
 
     noFill();
 
@@ -103,7 +110,7 @@ function draw() {
     clb.mousePressed(()=>{
       var ColourRef =  database.ref("USER" + tester +  "/" + "COLOUR");
       ColourRef.on("value",(data) => {
-      otherColour = data/val();
+      otherColour = data.val();
     });
 
     stroke(rgb(180,otherColour,otherColour));
@@ -128,7 +135,7 @@ function draw() {
   r.html("thickness");
   r.position(125,605);
 
-  }
+  //}
 }
 function mouseReleased(){
   currentPath = [];

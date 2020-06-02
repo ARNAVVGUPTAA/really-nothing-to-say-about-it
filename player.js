@@ -7,24 +7,33 @@ class Player {
       this.background = null;
       this.colour = null;
     }
-  
+
     getCount(){
       var playerCountRef = database.ref('PlayerCount');
       playerCountRef.on("value",function(data){
         playerCount = data.val();
       })
     }
-  
+
     updateCount(count){
-      database.ref('/').update({
-        PlayerCount: playerCount
-      });
+
+      if(playerCount === 1){
+        database.ref('/').set({
+          PlayerCount: 1
+        });
+      }
+      if(playerCount === 2){
+        database.ref('/').set({
+          PlayerCount: 2
+        });
+      }
+
     }
   
     update(name){
       if(playerCount !== 0){
         //var playerIndex = "USER" + PlayerCount;
-        database.ref("USERS/USER" + playerCount).set({
+        database.ref("USERS/USER" + this.index).set({
           name: this.name,
           BG: this.background,
           STROKE: this.stroke,

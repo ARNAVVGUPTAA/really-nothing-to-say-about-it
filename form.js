@@ -15,12 +15,13 @@ class Form {
     this.button.hide();
     
     this.newMethod();
-
+    indexa = playerCount
     player.name = this.input.value();    
     });
     }
 
     newMethod() {
-        playerCount++;
+        playerCount = playerCount + 1;
+        player.index = playerCount;
     }
 }
