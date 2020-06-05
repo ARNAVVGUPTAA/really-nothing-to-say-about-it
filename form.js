@@ -8,16 +8,27 @@ class Form {
     }
 
     display(){
-    this.button.mousePressed(()=> {
+
+        //var we = 
+
+        if(playerCount < 2){
+            text(playerCount + " <= Did it change? If not, please refrsh the page and try again",3,400);
+                
+        }
+        this.button.mousePressed(()=> {
         //print("DONE");
     
-    this.input.hide();
-    this.button.hide();
+            this.input.hide();
+            this.button.hide();
+
     
-    this.newMethod();
-    indexa = playerCount
-    player.name = this.input.value();    
-    });
+    
+            this.newMethod();
+            //indexa = playerCount
+            player.name = this.input.value();
+    
+            player.update();
+        });
     }
 
     newMethod() {

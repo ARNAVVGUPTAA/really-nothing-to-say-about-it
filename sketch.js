@@ -1,13 +1,13 @@
 var database, firebase, playerCount = 0;
 //the whole of the drawing
-var drawing = [],
+var drawing = [], otherDrawing = [],
 //the current line in making
 currentPath = [],
 otherColour,otherbg,
 tester;
-var clearButton, slider1,bgb,clb;
+var clearButton, slider1;
 var slider2, slider3,
-player, form, indexa,
+player, form, 
 allPlayers, col, va, thi;
 function setup() {
 
@@ -28,23 +28,18 @@ function setup() {
 
   clearButton = select("#clearButton");
 
-  bgb = createButton("COLOUR SAME AS OTHER'S");
-  bgb.position(350,600);
-
-  clb = createButton("BACKGROUND SAME AS OTHER'S");
-  clb.position(350,650);
-
   player = new Player();
   form = new Form();
   //createSprite(400, 200, 50, 50);
 }
 
 function draw() {
-  console.log(playerCount);
+  background(255);
+ // console.log(playerCount);
     if(playerCount < 2){
       player.getCount();
       player.updateCount();
-      player.update();
+      //
     } 
     if(playerCount === 2){
         database.ref('/').update({
@@ -59,14 +54,18 @@ function draw() {
   player.stroke = thi;
   player.colour = col;
   player.background = va;
+  
+  currentPath[0] = col;
+  currentPath[1] = thi;
 
   form.display();
 
- // if(playerCount === 2){
+
+  if(playerCount === 2){
+
+    player.update();
 
     //solved the problem, now each new Path has its own value of stroke and thickness
-    currentPath[0] = col;
-    currentPath[1] = thi;
 
     if(player.index === 1){
       tester = 2;
@@ -107,22 +106,6 @@ function draw() {
       drawing = [];
     })
 
-    clb.mousePressed(()=>{
-      var ColourRef =  database.ref("USER" + tester +  "/" + "COLOUR");
-      ColourRef.on("value",(data) => {
-      otherColour = data.val();
-    });
-
-    stroke(rgb(180,otherColour,otherColour));
-  })
-
-    bgb.mousePressed(()=>{
-      var BGRef = database.ref("USER" + tester + "/" + "COLOUR");
-      BGRef.on("value",(data)=>{
-      otherbg = data.val();
-    })
-  })
-
   var p = createElement("h2");
   p.html("background");
   p.position(350,535);
@@ -135,7 +118,7 @@ function draw() {
   r.html("thickness");
   r.position(125,605);
 
-  //}
+  }
 }
 function mouseReleased(){
   currentPath = [];
