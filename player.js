@@ -2,7 +2,7 @@ class Player {
     constructor(){
       this.index = null;
       //this.distance = 0;
-      this.name = null;
+     //this.name = null;
       this.stroke = null;
       this.background = null;
       this.colour = null;
@@ -17,7 +17,7 @@ class Player {
       })
     }
 
-    updateCount(count){
+    async updateCount(count){
 
       if(playerCount === 1){
         database.ref('/').update({
@@ -29,36 +29,33 @@ class Player {
           PlayerCount: 2
         });
       }
-      database.ref("USERS/USER" + player.index).update({
-        DRAWINGS: this.drawing
+      for(var i = 0; i < drawing.length; i++){
+        database.ref("USERS/USER" + player.index).update({
+          DRAWINGS: this.drawing
       })
     }
+    }
   
-    async update(name){
-      if(playerCount !== 0){
+    update(name){
+      if(playerCount !== 0 && this.drawing !== undefined){
         //var playerIndex = "USER" + PlayerCount;
-          await database.ref("USERS/USER" + this.index).set({
-            name: this.name,
+          database.ref("USERS/USER" + this.index).set({
             BG: this.background,
-            STROKE: this.stroke,
-            COLOUR: this.colour,
             DRAWINGS: this.drawing,
         });
         var otherDrawingRef = database.ref("USERS/USER" + tester + "/DRAWINGS");
-        otherDrawingRef.on("value",(data)=>{
+        otherDrawingRef.once("value",(data)=>{
           if(data.val() !== null){
-            this.otherDrawing.push(data.val());
+            this.otherDrawing = data.val();
+            for(var i = 0; i < data.val().length; i++){
+              this.drawing.push(data.val()[i]);
+            }
           }
         });
-        
-        for(var i=0; i < this.otherDrawing.length; i++){
-         var path = this.otherDrawing[i];
-          for(var j = 0; j < path.length; j++){
-            drawing.push(path[i]);
-          }
-        }
       }
     }
+      
+    
 
   static playerInfo(){
     var playerInfoRef = database.ref("USERS");

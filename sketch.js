@@ -4,11 +4,12 @@ var drawing = [], otherDrawing = [],
 //the current line in making
 currentPath = [],
 otherColour,otherbg,
-tester;
+tester, path;
 var clearButton, slider1;
 var slider2, slider3,
-player, form, 
+player, form, act, hoho,
 allPlayers, col, va, thi;
+
 function setup() {
 
   database = firebase.database();
@@ -35,6 +36,12 @@ function setup() {
 
 function draw() {
   background(255);
+
+  for(var i = 0; i < drawing.length; i++){
+    if(drawing[i] === undefined){
+      drawing.splice(i,1);
+    }
+  }
  // console.log(playerCount);
     if(playerCount < 2){
       player.getCount();
@@ -65,8 +72,6 @@ function draw() {
 
     player.update();
 
-    //solved the problem, now each new Path has its own value of stroke and thickness
-
     if(player.index === 1){
       tester = 2;
     } else if(player.index === 2){
@@ -84,22 +89,25 @@ function draw() {
         y : mouseY
       } 
       currentPath.push(point);
-      drawing.push(currentPath);
     }
-
+    drawing.push(currentPath);
+    
     noFill();
 
     for(var j = 0; j < drawing.length; j++){
-      var path = drawing[j];
-      beginShape();
-
-      for(var i = 2;  i < path.length; i++){
-        stroke(rgb(path[0],path[0],180));
-        strokeWeight(path[1]);
-        vertex(path[i].x, path[i].y);
+      if(drawing[j] !== undefined){
+        path = drawing[j];
+        beginShape();
+        if(path !== undefined){
+          for(var i = 2;  i < path.length; i++){
+            //console.log(path);
+            stroke(rgb(path[0],path[0],180));
+            strokeWeight(path[1]);
+            vertex(path[i].x, path[i].y);
+          }
+        }
+        endShape();
       }
-      endShape();
-
     }
 
     clearButton.mousePressed(()=>{
